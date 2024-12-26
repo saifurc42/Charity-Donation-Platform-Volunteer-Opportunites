@@ -50,3 +50,11 @@ class Donation(models.Model):
 
     def __str__(self):
         return self.id
+    
+class Gallery(models.Model):
+    donation = models.ForeignKey(Donation, on_delete=models.CASCADE)
+    deliverypic = models.FileField(null=True)
+    creationdate = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.id
