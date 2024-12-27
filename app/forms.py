@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Donor
+from .models import Donor, Volunteer
 
 class UserForm(UserCreationForm):
     password1 = forms.CharField(label= 'Password', widget=forms.PasswordInput(attrs={'class' : 'form-control', 'placeholder' : 'Enter Password'}))
@@ -37,3 +37,26 @@ class DonorSignupForm(forms.ModelForm):
             'address' : forms.Textarea(attrs={'class' : 'form-control', 'placeholder' : 'Full Address'}),
         } 
 
+class VolunteerSignupForm(forms.ModelForm):
+    userpic = forms.ImageField(),
+    idpic = forms.ImageField(),
+    class Meta:
+        model = Volunteer
+        fields = [
+            'contact',
+            'userpic',
+            'idpic',
+            'address',
+            'aboutme'
+        ]
+        widgets = {
+            'contact' : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder' : 'Contact Number'}),
+            'address' : forms.Textarea(attrs={'class' : 'form-control', 'rows' : 4, 'placeholder' : 'Full Address'}),
+            'aboutme' : forms.Textarea(attrs={'class' : 'form-control','rows' : 4, 'placeholder' : 'About Me'}),
+            'userpic' : forms.FileInput(attrs={'class' : 'form-control'}),
+            'idpic' : forms.FileInput(attrs={'class' : 'form-control'}),
+        }
+        labels = {
+            'userpic' : "User Picture",
+            'idpic' : "Id Proof Picture"
+        }

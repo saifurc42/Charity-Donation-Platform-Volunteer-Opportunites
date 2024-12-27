@@ -11,7 +11,44 @@
         <h2 class="fw-bold mb-2 text-uppercase text-center">Volunteer Sign Up</h2>
         <p class="text-white-50 mb-2 text-center">Please enter following details</p>
 
-        <div class="col-sm-12 p-2">
+        <form action="" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% for fm in form1 %}
+            <div class="form-group col-sm-12 p-2">
+                {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+
+            </div>
+
+            {% endfor %}
+            {% for fm in form2 %}
+            <div class="form-group col-sm-12 p-2">
+                {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+
+            </div>
+
+            {% endfor %}
+
+            <div class="d-grid gap-2">
+                <input type="submit" value="Submit" class="mt-4 px-3 btn btn-primary">
+            </div>
+            
+
+            <div class="mt-4 px-3 text-center">
+                <p class="mb-0">Already have an account? <a href="{% url 'login_volunteer' %}" class="text-white-50 fw-bold">Login</a></p>
+              </div>
+
+
+        </form>
+
+
+        
+        {% if messages %}
+            {% for message in messages %}
+                <p {% if message.tags %} class="alert alert-{{message.tags}} my-5" {% endif %}>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+
+        <!-- <div class="col-sm-12 p-2">
             <div class="form-group">
                 <label>First Name</label>
                 <input type="text" name="firstname" placeholder="Enter First Name"  class="form-control"  pattern="[A-Za-z]+">
@@ -81,14 +118,10 @@
                 <label>About Yourself</label>
                 <textarea name="aboutme" class="form-control" placeholder="About Yourself"></textarea>
             </div>
-        </div>
+        </div> -->
 
 
     
-    <input type="submit" value="Submit" class="mt-4 px-3 btn btn-primary">
-    <div class="mt-4 px-3 text-center">
-      <p class="mb-0">Already have an account? <a href="{% url 'login_volunteer' %}" class="text-white-50 fw-bold">Login</a></p>
-    </div>
   </div>
   </div>
   </div>

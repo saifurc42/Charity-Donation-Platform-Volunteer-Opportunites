@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views import View
-from .models import Donor
-from .forms import UserForm, DonorSignupForm
+from .models import Donor, Volunteer
+from .forms import UserForm, DonorSignupForm, VolunteerSignupForm
 
 
 # 
@@ -53,9 +53,34 @@ class signup_donor(View):
                 messages.warning(request,'!!Profile Not Created!!')
         return render(request, "signup_donor.html")
 
+class signup_volunteer(View):
+    def get(self,request):
+        form1 = UserForm()
+        form2 = VolunteerSignupForm()
+        return render(request, "signup_volunteer.html", locals())
+    def post(self,request):
+        form1 = UserForm(request.POST)
+        form2 = VolunteerSignupForm(request.POST)
+        if form1.is_valid() & form2.is_valid():
+            fn = request.POST["first_name"]
+            ln = request.POST["last_name"]
+            em = request.POST["email"]
+            us = request.POST["username"]
+            contact = request.POST["contact"]
+            pwd = request.POST["password1"]
+            userpic = request.FILES["userpic"]
+            idpic = request.FILES["idpic"]
+            address = request.POST["address"]
+            aboutme = request.POST["aboutme"]
 
-def signup_volunteer(request):
-    return render(request, "signup_volunteer.html")
+            try:
+                 user = User.objects.create_user(first_name = fn, last_name = ln, username = us, email= em, password= pwd)
+                 Volunteer.objects.create(user = user, contact = contact, userpic = userpic, idpic = idpic, address = address, aboutme = aboutme, status = 'pending')
+                 messages.success(request,'Congratulations. Volunteer Profile created successfully!!')
+            except:
+                messages.warning(request,'!!Profile Not Created!!')
+        return render(request, "signup_volunteer.html", locals())
+
 
 
 def index_admin(request):

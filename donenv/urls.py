@@ -31,7 +31,7 @@ urlpatterns = [
     path("login-donor/", views.login_donor, name="login_donor"),
     path("login-volunteer/", views.login_volunteer, name="login_volunteer"),
     path("signup-donor/", views.signup_donor.as_view(), name="signup_donor"),
-    path("signup-volunteer/", views.signup_volunteer, name="signup_volunteer"),
+    path("signup-volunteer/", views.signup_volunteer.as_view(), name="signup_volunteer"),
     path("index-admin/", views.index_admin, name="index_admin"),
     # admin dashboard
     path("pending-donation/", views.pending_donation, name="pending_donation"),
